@@ -1,9 +1,8 @@
 const express = require("express");
-const app = express();
 const mongoose = require("mongoose");
 const session = require("express-session");
 require("dotenv").config();
-
+const app = express();
 
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
@@ -42,7 +41,10 @@ mongoose
         console.log(e);
     });
 
-
+/*
+app.get('/',(req, res, next)=> {
+    req.session
+})*/
 
 
 
