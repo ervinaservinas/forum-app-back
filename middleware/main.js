@@ -17,7 +17,6 @@ module.exports = {
     },
     validateLogin: async (req, res, next) => {
         const { username, password } = req.body
-        console.log(username, "logine")
         const userExist = await usersDb.findOne({ username: username })
         if (!userExist) {
             res.send({ success: false, message: 'Wrong credentials' })

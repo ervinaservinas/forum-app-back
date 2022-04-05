@@ -10,7 +10,6 @@ module.exports = {
     login: async (req, res) => {
         const { username, password } = req.body
         const userExist = await usersDb.findOne({ username: username })
-        console.log(userExist)
         const compareFor = await bcrypt.compare(password, userExist.password)
         if (username === userExist.username && compareFor) {
             req.session.username = username
