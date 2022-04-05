@@ -18,7 +18,7 @@ const commentSchema = new Schema({
         type: String,
         required: true
     },
-    registeredUserTimestamp: {
+    registeredUserTime: {
         type: Number,
         required: true
     },
