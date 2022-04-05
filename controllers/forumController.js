@@ -51,20 +51,20 @@ module.exports = {
     commentsByPage: async (req, res) => {
         const { username } = req.session;
         const { id, pageIndex } = req.params;
-        let Index = 0;
+        let skipIndex = 0;
         if (pageIndex > 1) {
-            Index = (Number(pageIndex) - 1) * rowsInPage;
+            skipIndex = (Number(pageIndex) - 1) * rowsInPage;
         }
-        const comments = await commentsDb.find({ topicID: id }).skip(Index).limit(rowsInPage);
+        const comments = await commentsDb.find({ topicID: id }).skip(skipIndex).limit(rowsInPage);
 
         const topic = await topicsDb.findOne({ _id: id })
 
         let user = await usersDb.findOne({ username: username })
-        const searchNotification = notifications.find(x => x == id)
+        const search = notifications.find(x => x == id)
         const filteredArray = notifications.filter(x => x != id)
 
 
-        if (username && searchNotification) {
+        if (username && search) {
             const topicOwner = await usersDb.updateOne({ username: username }, { $set: { notification: filteredArray } })
         }
 
@@ -106,7 +106,7 @@ module.exports = {
             comment.topicID = id
             comment.text = text
             comment.imageUser = user.image
-            comment.registeredUserTime = user.registerTime
+            comment.registeredUserTimestamp = user.registerTimestamp
             comment.createdTimestamp = Date.now()
             comment.save()
                 .then(async () => {
