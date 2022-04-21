@@ -1,9 +1,11 @@
 const usersDb = require('../models/userSchema')
 
 module.exports = {
+    // REGISTRACIJA
     validateRegister: async (req, res, next) => {
         const { username, pass1, pass2 } = req.body;
-        const userExist = await usersDb.findOne({ username: username })
+        const userExist = await usersDb.findOne(
+            { username: username })
         if (pass1 !== pass2 || pass1.length < 5 || pass2.length > 20 || pass1.length < 3 || pass1.length > 20) {
             res.send({ error: "Password should be 5-20 symbols" })
         }
@@ -15,15 +17,18 @@ module.exports = {
             next()
         }
     },
+    //LOGINAS
     validateLogin: async (req, res, next) => {
         const { username, password } = req.body
-        const userExist = await usersDb.findOne({ username: username })
+        const userExist = await usersDb.findOne(
+            { username: username })
         if (!userExist) {
             res.send({ success: false, message: 'Wrong credentials' })
         } else {
             next()
         }
     },
+    // FOTO VALID
     validateImage: (req, res, next) => {
         const { newImage } = req.body
         if (newImage.length < 5 || newImage.length > 400) {
@@ -32,6 +37,7 @@ module.exports = {
             next()
         }
     },
+    // LENGTH VALID
     validateTopic: async (req, res, next) => {
         const { newTopic } = req.body
         if (newTopic.length < 5 || newTopic.length > 50) {
@@ -40,6 +46,7 @@ module.exports = {
             next()
         }
     },
+    //COMMENT VALID
     validateComment: (req, res, next) => {
         const { text } = req.body
         if (text.length < 5 || text.length > 400) {

@@ -81,7 +81,6 @@ module.exports = {
         const { username } = req.session;
         const { id, text } = req.body;
         const user = await usersDb.findOne({ username: username })
-        //console.log(user)
         const topic = await topicsDb.findOne({ _id: id })
         const topicOwnerUser = await usersDb.findOne({ username: topic.owner })
         if(topicOwnerUser){
@@ -95,11 +94,20 @@ module.exports = {
             notifications.push(topic._id)
         }
         if (username) {
-            const updatedUser = await usersDb.findOneAndUpdate({ username: username }, { $inc: { commentsAmount: 1 } })
+            const updatedUser =
+                await usersDb.findOneAndUpdate(
+                { username: username },
+                { $inc: { commentsAmount: 1 } })
             if (topic.owner !== username) {
-                const topicOwner = await usersDb.findOneAndUpdate({ username: topic.owner }, { $set: { notification: notifications } })
+                const topicOwner =
+                    await usersDb.findOneAndUpdate(
+                    { username: topic.owner },
+                    { $set: { notification: notifications } })
             }
-            const updateTopic = await topicsDb.findOneAndUpdate({ _id: id }, { $set: { lastCommentBy: username }, $inc: { commentsAmount: 1 } })
+            const updateTopic =
+                await topicsDb.findOneAndUpdate(
+                { _id: id }, { $set: { lastCommentBy: username },
+                $inc: { commentsAmount: 1 } })
 
             const comment = new commentsDb();
             comment.owner = username
@@ -119,7 +127,8 @@ module.exports = {
                 });
         }
     },
-    getFavorites: async (req, res) => {
+    getFavorites: async (req, res) =>
+    {
         const { favoritesIndex } = req.body;
         try {
             const topics = await topicsDb.find({ _id: favoritesIndex })
@@ -129,3 +138,6 @@ module.exports = {
         }
     }
 }
+
+
+// comments

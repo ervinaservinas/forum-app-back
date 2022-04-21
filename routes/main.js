@@ -3,19 +3,13 @@ const router = express.Router();
 
 
 const {
-    register, login, changeImage, getUser,
-    logout } = require('../controllers/userController')
+    register, login, changeImage, getUser, logout } = require('../controllers/userController')
 
 const {
-    createTopic, getAllTopics,
-    getMyTopics,
-    commentsByPage,
-    addComment,
-    getFavorites} = require('../controllers/forumController')
+    createTopic, getAllTopics, getMyTopics, commentsByPage, addComment, getFavorites} = require('../controllers/forumController')
 
 const {
-    validateRegister, validateLogin, validateImage,
-    validateTopic, validateComment
+    validateRegister, validateLogin, validateImage, validateTopic, validateComment
 } = require('../middleware/main')
 
 
